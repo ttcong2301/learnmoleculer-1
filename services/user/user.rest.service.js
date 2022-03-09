@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const MeAPI = require('../../serviceDependencies/MEAPI');
 const { sign } = require('jsonwebtoken');
 
 module.exports = {
@@ -31,7 +30,7 @@ module.exports = {
 				body: {
 					$$type: 'object',
 					email: {
-						type: 'string',
+						type: 'email',
 						required: true,
 					},
 					password: {
@@ -51,31 +50,16 @@ module.exports = {
 			params: {
 				body: {
 					$$type: 'object',
-					email: {
-						type: 'email',
-						required: true,
-					},
-					password: {
-						type: 'string',
-						required: true,
-					},
-					fullName: {
-						type: 'string',
-						required: true,
-					},
-					phone: {
-						type: 'string',
-						required: true,
-					},
+					email: 'email|required',
+					password: 'string|min:6',
+					fullName: 'string|required',
+					phone: 'string|required',
 					gender: {
 						type: 'string',
 						enum: ['male', 'female'],
 						required: true
 					},
-					avatar: {
-						type: 'string',
-						required: false
-					}
+					avatar: 'string|optional'
 				}
 			},
 			handler: require('./actions/register.action')
@@ -162,14 +146,7 @@ module.exports = {
 * Service started lifecycle event handler
 */
 	async started() {
-		const url = process.env.FE_URL;
-		const isSecurity = process.env.FE_SECURITY === 'true';
-		const privateKey = process.env.FE_PRIVATEKEY;
-		const publicKey = process.env.FE_PUBLICKEY;
 
-		this.historyService = new MeAPI({
-			url, publicKey, privateKey, isSecurity, 'x-api-client': 'app',
-		});
 	},
 
 	/**

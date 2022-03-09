@@ -14,8 +14,9 @@ module.exports = async function (ctx) {
 		throw new MoleculerClientError("Wrong password!", 422, "", [{ field: "password", message: "wrong password" }]);
 
 	const now = Date.now();
-	const userToken = await ctx.call('UserTokenModel.create', [{ email, createdTime: now, expiredTime: now + (1000 * 60 * 60 * 24) }]);
-	console.log("🚀 ~ userToken", userToken);
+
+	const userToken = await ctx.call('UserTokenModel.create', [{ email, createdTime: now, expiredTime: now + (1000 * 60 * 60 * 24 * 7) }]); // 1 week
+
 	const accessToken = this.schema.methods.generateJWT({ email: user.email, userTokenId: userToken._id });
 
 	return { user: _.pick(user, ['email', 'fullName', 'phone', 'gender', 'avatar']), accessToken };
