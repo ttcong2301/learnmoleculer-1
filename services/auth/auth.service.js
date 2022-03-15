@@ -6,58 +6,48 @@ module.exports = {
 	/**
 	 * Settings
 	 */
-	settings: {
-	},
+	settings: {},
 	/**
 	 * Dependencies
 	 */
 	dependencies: [],
 
 	/**
-		 * Actions
-		 */
+	 * Actions
+	 */
 	actions: {
 		verifyUser: {
 			registry: {
 				auth: {
 					name: 'jwt',
 					jwtKey: process.env.JWT_SECRET || 'secret',
-				}
+				},
 			},
 			handler: require('./actions/verifyUser.action'),
-		}
+		},
 	},
 	/**
- * Events
- */
-	events: {
-
-	},
+	 * Events
+	 */
+	events: {},
 
 	/**
-* Methods
-*/
-	methods: {
-
-	},
+	 * Methods
+	 */
+	methods: {},
 
 	/**
-* Service created lifecycle event handler
-*/
-	created() {
-
-	},
+	 * Service created lifecycle event handler
+	 */
+	created() {},
 
 	/**
-* Service started lifecycle event handler
-*/
-	async started() {
-
-	},
+	 * Service started lifecycle event handler
+	 */
+	async started() {},
 
 	/**
-* Service stopped lifecycle event handler
-*/
-	async stopped() {
-	},
+	 * Service stopped lifecycle event handler
+	 */
+	async stopped() {},
 };

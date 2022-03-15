@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const DbService = require('moleculer-db');
 const MongooseAdapter = require('moleculer-db-adapter-mongoose');
 const MongooseAction = require('moleculer-db-adapter-mongoose-action');
-const ForgotPassword = require('./model/forgotPassword.model');
+const ActiveCode = require('./model/activeCode');
 
 module.exports = {
-	name: 'ForgotPasswordModel',
+	name: 'ActiveCodeModel',
 
 	mixins: [DbService],
 
@@ -14,12 +14,11 @@ module.exports = {
 		useUnifiedTopology: true,
 		keepAlive: true,
 	}),
-	model: ForgotPassword,
+	model: ActiveCode,
 	/**
 	 * Settings
 	 */
-	settings: {
-	},
+	settings: {},
 
 	/**
 	 * Dependencies
@@ -34,9 +33,7 @@ module.exports = {
 	/**
 	 * Events
 	 */
-	events: {
-
-	},
+	events: {},
 
 	/**
 	 * Methods
@@ -46,14 +43,12 @@ module.exports = {
 	/**
 	 * Service created lifecycle event handler
 	 */
-	created() {
-
-	},
+	created() {},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
-	async started() { },
+	async started() {},
 
 	/**
 	 * Service stopped lifecycle event handler

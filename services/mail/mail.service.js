@@ -13,18 +13,16 @@ module.exports = {
 			auth: {
 				user: process.env.GMAIL_USER,
 				pass: process.env.GMAIL_PASS,
-			}
-		}
+			},
+		},
 	},
 
-	created() {
-
-	},
+	created() {},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
-	async started() { },
+	async started() {},
 
 	/**
 	 * Service stopped lifecycle event handler

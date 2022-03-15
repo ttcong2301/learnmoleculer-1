@@ -17,8 +17,8 @@ module.exports = {
 	dependencies: [],
 
 	/**
-		 * Actions
-		 */
+	 * Actions
+	 */
 	actions: {
 		login: {
 			rest: {
@@ -37,7 +37,13 @@ module.exports = {
 						type: 'string',
 						required: true,
 					},
-				}
+				},
+			},
+			hooks: {
+				before(ctx) {
+					if (ctx.params.body.email)
+						ctx.params.body.email = ctx.params.body.email.toLowerCase();
+				},
 			},
 			handler: require('./actions/login.action'),
 		},
@@ -50,19 +56,33 @@ module.exports = {
 			params: {
 				body: {
 					$$type: 'object',
-					email: 'email|required',
+					email: {
+						type: 'string',
+						required: true,
+						pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+					},
 					password: 'string|min:6',
 					fullName: 'string|required',
-					phone: 'string|required',
+					phone: {
+						type: 'string',
+						required: true,
+						pattern: /([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/,
+					},
 					gender: {
 						type: 'string',
 						enum: ['male', 'female'],
-						required: true
+						required: true,
 					},
-					avatar: 'string|optional'
-				}
+					avatar: 'string|optional',
+				},
 			},
-			handler: require('./actions/register.action')
+			hooks: {
+				before(ctx) {
+					if (ctx.params.body.email)
+						ctx.params.body.email = ctx.params.body.email.toLowerCase();
+				},
+			},
+			handler: require('./actions/register.action'),
 		},
 		forgotPassword: {
 			rest: {
@@ -77,9 +97,9 @@ module.exports = {
 						type: 'email',
 						required: true,
 					},
-				}
+				},
 			},
-			handler: require('./actions/forgotPassword.action')
+			handler: require('./actions/forgotPassword.action'),
 		},
 		setNewPassword: {
 			rest: {
@@ -101,10 +121,10 @@ module.exports = {
 					code: {
 						type: 'string',
 						required: true,
-					}
-				}
+					},
+				},
 			},
-			handler: require('./actions/setNewPassword.action')
+			handler: require('./actions/setNewPassword.action'),
 		},
 		lougout: {
 			rest: {
@@ -116,42 +136,42 @@ module.exports = {
 				},
 			},
 			handler: require('./actions/logout.action'),
-		}
-
+		},
+		activeAccount: {
+			rest: {
+				method: 'GET',
+				fullPath: '/user/active-account/',
+				auth: false,
+			},
+			handler: require('./actions/activeAccount.action'),
+		},
 	},
 	/**
- * Events
- */
-	events: {
-
-	},
+	 * Events
+	 */
+	events: {},
 
 	/**
-* Methods
-*/
+	 * Methods
+	 */
 	methods: {
 		generateJWT(payload) {
 			return sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
-		}
+		},
 	},
 
 	/**
-* Service created lifecycle event handler
-*/
-	created() {
-
-	},
+	 * Service created lifecycle event handler
+	 */
+	created() {},
 
 	/**
-* Service started lifecycle event handler
-*/
-	async started() {
-
-	},
+	 * Service started lifecycle event handler
+	 */
+	async started() {},
 
 	/**
-* Service stopped lifecycle event handler
-*/
-	async stopped() {
-	},
+	 * Service stopped lifecycle event handler
+	 */
+	async stopped() {},
 };
